@@ -1,25 +1,43 @@
 require_relative 'display'
+require_relative 'code_creator'
+require_relative 'guess_evaluator'
 
 class Game
-  attr_reader :user_guess, :user_guess_count, :secret_code, :display,
-    :command, :instream, :outstream
+  attr_reader :user_guess, 
+              :user_guess_count, 
+              :secret_code, 
+              :display,
+              :command, 
+              :instream, 
+              :outstream
 
   def initialize(instream, outstream, display)
-    @secret_code = []
+    @secret_code = CodeCreator.new.create
     @user_guess = ""
     @instream = instream
     @outstream = outstream
-    @command = ""
     @display = display
-    @user_guess_count = 0
+    @user_guess_count = 1
   end
 
   def start
-    outstream.display.guess_request
+    outstream.puts "Here is the secret code: #{secret_code}"
+    outstream.puts display.guess_request
+    @user_guess = instream.gets.strip.upcase
     until win? || quit?
-      outstream.display.user_guess_count_message
-      
-
+      guess_evaluator = GuessEvaluator.new(user_guess, secret_code)
+      if guess_evaluator.correct?
+        outstream.puts display.correct_guess
+      else
+        num_colors = guess_evaluator.number_of_correct_colors
+        num_of_positions = guess_evaluator.number_of_correct_positions
+        outstream.puts display.color_position_message(num_colors, num_of_positions)
+        outstream.puts display.user_guess_count_message(user_guess_count)
+        outstream.puts display.guess_request
+        @user_guess = instream.gets.strip.upcase
+        @user_guess_count += 1
+        # game_process
+      end
     end
   end
 
@@ -28,35 +46,30 @@ class Game
   end
 
   def quit?
-    command == "Q" || command == "QUIT"
+    user_guess == "Q" || user_guess == "QUIT"
   end
-end
+end 
 
+#   def game_process
+#     case
+#     when quit?
+#       outstream.display.quit
+#     when invalid_entry?
+#       outstream.display.invalid_user_input_message
+#     # when
+      
+#     # end
 
-
-
-
-
-
-#   @input = gets.chomp.upcase
-#   guess_evaluator = GuessEvaluator.new(@input, @secret_code)
-#   if guess_evaluator.correct?
-# end
-
-# def game_flow(user_input)
-
-#   case user_input
-#   when "P"
-#     puts "Lets Play!!"
-#   when "I"
-#     puts "do something"
-#   when "Q"
-#     puts "do something else"
-#   else
-#     puts "Invalid option: Choose One of the following (p), (i), (q)"
-#     get_user_input
 #   end
 
+  
+
+#   def user_guess_count
+#     user_guess_count+=
+#   end
+
+#   # def invalid_entry? #??????
+# end
 
 
 
@@ -64,7 +77,22 @@ end
 
 
 
+# #   @input = gets.chomp.upcase
+# #   guess_evaluator = GuessEvaluator.new(@input, @secret_code)
+# #   if guess_evaluator.correct?
+# # end
 
+# # def game_flow(user_input)
 
-
+# #   case user_input
+# #   when "P"
+# #     puts "Lets Play!!"
+# #   when "I"
+# #     puts "do something"
+# #   when "Q"
+# #     puts "do something else"
+# #   else
+# #     puts "Invalid option: Choose One of the following (p), (i), (q)"
+# #     get_user_input
+# #   end
 

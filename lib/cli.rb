@@ -26,8 +26,8 @@ class CLI
   end
 
   def game_start
-    Display.welcome_message
-    Display.game_options
+    display.welcome_message
+    display.game_options
     get_user_input
     game_flow
   end
@@ -39,25 +39,24 @@ class CLI
   def game_flow
     until quit? # run the loop below until the user says to quit
       if instructions? # check if the user wants instructions
-        Display.game_objective # give the user instructions
-        Display.want_to_play
+        display.game_objective # give the user instructions
+        display.want_to_play
         # add prompt user for new input***!!!
         @command = instream.gets.chomp.upcase # get a new input from the user
       
       elsif play? # check if the user wants to play -- if play?
-        Display.let_game_begin
-        Display.guess_request
-
-        @command = instream.gets.chomp.upcase
+        display.let_game_begin
         # add start the game (# start the timer -- @timer.start)
         @game.start
+        puts "What do you want to do now?"
+        @command = instream.gets.chomp.upcase
       else # for anything else
-        Display.invalid_option
-        Display.prompt_for_answer
+        display.invalid_option
+        display.prompt_for_answer
         @command = instream.gets.chomp.upcase
       end
     end
-  Display.quit
+  display.quit
   end
   
 
