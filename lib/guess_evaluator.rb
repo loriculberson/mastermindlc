@@ -9,11 +9,6 @@ class GuessEvaluator
 
   end
 
-  def valid_guess
-    @selected = (@user_guess - @secret_code) 
-    @selected.count == 0 
-  end
-
   def correct?
     @user_guess == @secret_code 
   end
@@ -23,8 +18,8 @@ class GuessEvaluator
   end
 
   def number_of_correct_positions
-    @user_guess.zip(@secret_code).each do |x|
-      @selected << x if x[0]==x[1]
+    @user_guess.zip(@secret_code).each do |u,s|
+      @selected << u if u==s
     end
     
     @selected.length
@@ -33,7 +28,12 @@ class GuessEvaluator
   
 end
 
-
+# def number_of_correct_positions
+#     @user_guess.zip(@secret_code).each do |x|
+#       @selected << x if x[0]==x[1]
+#     end
+    
+    # @selected.length
 
 # count each guess
 # evaluate correct position

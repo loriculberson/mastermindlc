@@ -3,7 +3,7 @@ class CodeCreator
 
   def initialize
     @secret_code = []
-    @code_letters = ["r", "y", "b", "g"]
+    @code_letters = ["R", "Y", "B", "G"]
   end                   
 
 

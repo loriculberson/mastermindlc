@@ -5,20 +5,6 @@ require_relative '../lib/guess_evaluator'
 
 
 class GuessEvaluatorTest < Minitest::Test
-  
-  
-  def test_user_input_is_valid_guess
-    guess_evaluator = GuessEvaluator.new("RGBY", ["R", "G", "B", "Y"])
-
-    guess_evaluator.valid_guess
-    assert_equal 0, guess_evaluator.selected.count
-  end
-
-  # def test_user_input_is_not_valid_guess
-  #    guess_evaluator = GuessEvaluator.new(user_guess)
-
-  #   refute 0, guess_evaluator.valid_guess
-  # end
 
   def test_user_guess_is_correct
     guess_evaluator = GuessEvaluator.new("RGBY", ["R", "G", "B", "Y"])
@@ -63,11 +49,3 @@ class GuessEvaluatorTest < Minitest::Test
   end
 end
 
-
-# code_creator = CodeCreator.new.create
-# guess = GuessEvaluator.new(user_input, code_creator.secret_code)
-# if guess.correct?
-#   puts 'Yay, you won!'
-# else
-#   puts 'try again, you got x right and y in the right position'
-# end

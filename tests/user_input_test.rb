@@ -2,22 +2,37 @@ gem 'minitest', '~>5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/user_input'
+require_relative '../lib/code_creator'
 
 class UserInputTest < Minitest::Test
- 
-  def test_player_select
 
 
-  def test_user_input_is_converted_to_upcase
+  def test_user_input_has_valid_characters
+      user_input = UserInput.new("RGBY", ["R", "G", "B", "Y"])
+      user_input.valid_guess
+      assert_equal 0, user_input.selected.count
+  end
+
+  def test_user_input_does_not_have_invalid_characters
+     user_input = UserInput.new("R+BY", ["R", "G", "B", "Y"])
+
+    user_input.valid_guess
+    refute_equal 0, user_input.selected.count
+  end
+
+  def test_if_user_input_length_is_more_than_four_characters
+    user_input = UserInput.new("RYBBY", ["R", "G", "B", "Y"])
+
+    assert user_input.too_long?
+  end
+
+  def test_if_user_input_length_is_less_than_four_characters
+    user_input = UserInput.new("RY", ["R", "G", "B", "Y"])
+
+    assert user_input.too_short?
   end
 
 
-  
+
 
 end
-  
-  # def test_user_guess_is_correct
-#     guess_evaluator = GuessEvaluator.new("RGBY", ["B", "G", "R", "Y"])
-
-#     refute guess_evaluator.correct?
-#   end

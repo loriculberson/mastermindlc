@@ -1,5 +1,5 @@
 codeletters = ["r", "b","g","y"]
-user_guess = ["g", "y","a","g"]
+user_guess = ["r", "r","r","+"]
 
 selected = []
 
