@@ -1,0 +1,166 @@
+
+#REVISED
+
+  def start
+    outstream.puts "Here is the secret code: #{secret_code}"
+    outstream.puts display.let_game_begin
+  
+    until win? || quit?
+      outstream.puts display.user_guess_count_message(user_guess_count)
+      outstream.puts display.guess_request
+      @user_guess = instream.gets.strip.upcase
+      process_game_turn
+    end
+  end
+
+  def process_game_turn
+    #what the program executes
+    case
+    when win?
+      outstream.puts display.correct_guess
+
+    when quit?
+      outstream.puts display.quit
+    when too_long?
+      outstream.puts display.too_long
+    when too_short?
+      outstream.puts display.too_short
+    when invalid_entry?
+      outstream.puts invalid_user_input_message
+    end
+  end
+
+
+  def win?
+    user_guess == secret_code
+  end
+
+  def quit?
+    user_guess == "Q" || user_guess == "QUIT"
+  end
+
+  def too_long?
+    user_guess.length > 4
+  end
+
+  def too_short?
+    user_guess.length < 4
+  end
+
+  def invalid_entry?
+    @user_guess - @selected !== 0
+    # guess_evaluator.number_of_correct_colors
+  end
+
+#not sure if I need this
+  # def play_again?
+  #   user_guess == "P" || user_guess == "PLAY"
+  # end
+
+  
+
+ #    guess_evaluator = GuessEvaluator.new(user_guess, secret_code)
+      
+
+
+
+
+
+
+ # # @user_guess = instream.gets.strip.upcase
+ #      if guess_evaluator.correct?
+ #        
+ #        outstream.puts display.play_again
+ #        # require 'pry'
+ #        # binding.pry
+ #        Game.new(instream, outstream, display)
+ #        instream.gets.chomp.upcase
+       
+ #      #elsif 
+
+ #      else
+        
+ #        num_colors = guess_evaluator.number_of_correct_colors
+ #        num_of_positions = guess_evaluator.number_of_correct_positions
+ #        outstream.puts display.color_position_message(num_colors, num_of_positions)
+        
+        
+        
+ #        @user_guess_count += 1
+ #        # game_process
+
+ #      #else
+ #      end
+
+
+ #    end
+ #  end
+
+ 
+def play
+    outstream.puts "Here is the secret code: #{secret_code}"
+    outstream.puts display.guess_request
+    
+    @user_guess = instream.gets.strip.upcase
+
+    until win? || quit?
+      guess_evaluator = GuessEvaluator.new(user_guess, secret_code)
+      if guess_evaluator.correct?
+        outstream.puts display.correct_guess
+        outstream.puts display.play_again
+        # require 'pry'
+        # binding.pry
+        Game.new(instream, outstream, display)
+        instream.gets.chomp.upcase
+       
+      #elsif 
+
+      else
+        
+        num_colors = guess_evaluator.number_of_correct_colors
+        num_of_positions = guess_evaluator.number_of_correct_positions
+        outstream.puts display.color_position_message(num_colors, num_of_positions)
+        
+        outstream.puts display.user_guess_count_message(user_guess_count)
+        outstream.puts display.guess_request
+        @user_guess = instream.gets.strip.upcase
+        @user_guess_count += 1
+        # game_process
+
+      #else
+      end
+
+
+    end
+  end
+
+  def win?
+    user_guess == secret_code
+  end
+
+  def quit?
+    user_guess == "Q" || user_guess == "QUIT"
+  end
+end 
+
+def too_long?
+  user_guess.length > 4
+end
+
+def too_short?
+  user_guess.length < 4
+end
+
+def play_again?
+  user_guess == "P" || user_guess == "PLAY"
+end
+
+
+
+
+
+
+
+
+
+

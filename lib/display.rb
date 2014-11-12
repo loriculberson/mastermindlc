@@ -10,59 +10,67 @@ class Display
   end
 
   def basic_instructions
-    puts "Your job is to guess a secret 4 color code. Colors include \n[R]ed, [B]lue, [G]reen and [Y]ellow. Keep in mind, colors may be repeated more than once. \nValid guesses: RBYG, BBYR and YGBR. Invalid guesses: RYG, YYG& and GBG6. Good luck!\nFor more detailed instructions, press [I]."
+    "Your job is to guess a secret 4 color code. Colors include \n[R]ed, [B]lue, [G]reen and [Y]ellow. Keep in mind, colors may be repeated more than once. \nValid guesses: RBYG, BBYR and YGBR. Invalid guesses: RYG, YYG& and GBG6. Good luck!\nFor more detailed instructions, press [I]."
   end
 
   def game_options
-   puts "\nTo play, press [P]\nTo read the instructions press [I]\nTo quit press [Q]"
+    "\nTo PLAY, press [P]. To read the INSTRUCTIONS press [I]. To QUIT press [Q]"
   end
 
   def prompt_for_answer
-    puts ">>Enter response:"
+     ">> "
   end
 
   def invalid_option
-    puts "You may only enter [P]lay, [I]nstructions or [Quit]."
+     "Invalid entry."
   end
 
   def let_game_begin
-    puts "Alright then, let's play!\n"
+     "Alright then, let's play!\n"
   end
 
   def want_to_play 
-    puts "If you would you like to play, press [P]. To quit, press [Q]:\n"
+     "If you would you like to play, press [P]. To quit, press [Q]:\n"
   end
 
   def guess_request
-    puts "What is your 4 color guess?"
+     "What is your 4 color guess?"
   end 
 
   def invalid_user_input_message
-   puts "Uh-oh! Your guess is not valid. Please try again.\nRemember, no spaces and you may only select R, G, B or Y."
+    "Uh-oh! Your guess is not valid. Please try again.\nRemember, no spaces and you may only select R, G, B or Y."
   end
 
   def color_position_message(colors, positions)
-    puts "Nice guess. You have #{colors} colors selected correctly\nand #{positions} of them are in the correct position.\nTry again!"
+     "Nice guess. You have #{colors} colors selected correctly\nand #{positions} of them are in the correct position.\nTry again!"
+  end
+
+  def too_long
+     "Hmmm....you entered too many characters. Try again."
+  end
+
+  def too_short
+   "Sorry! Not enough characters. Try again."
   end
 
   def user_guess_count_message(user_guess_count)
-    puts "Guess #: #{user_guess_count}.\n"
+   "Guess #: #{user_guess_count}.\n"
   end
 
   def correct_guess
-    puts "Way to go! You are CORRECT! I want a rematch!"
+   "Way to go! You are CORRECT! I want a rematch!"
   end
 
   def quit
-    puts "Goodbye and have a great day!!!"
+   "Goodbye and have a great day!!!"
   end
 
   def game_over
-    puts "Wow! Good game!"
+   "Wow! Good game!"
   end
 
   def play_again
-    puts "To play again press [P], otherwise press [Q]."
+   "To play again press [P], otherwise press [Q]."
   end
 
 

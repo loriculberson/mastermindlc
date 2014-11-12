@@ -9,17 +9,25 @@ class GuessEvaluator
 
   end
 
+  def user_guess
+    @user_guess
+  end
+
   def correct?
     @user_guess == @secret_code 
   end
 
   def number_of_correct_colors
+    # puts "** inside nuymber number_of_correct_colors"
+    # puts "User Guess #{@user_guess.inspect}"
+    # puts "Secret Code #{@secret_code.inspect}"
+    # puts "I expect this to be #{4-(@user_guess - @secret_code).length}"
     4-(@user_guess - @secret_code).length
   end
 
   def number_of_correct_positions
     @user_guess.zip(@secret_code).each do |u,s|
-      @selected << u if u==s
+      @selected << u if u==s 
     end
     
     @selected.length
@@ -27,6 +35,7 @@ class GuessEvaluator
 
   
 end
+# @user_guess.zip(@secret_code) {|x| x[0] == x[1]}
 
 # def number_of_correct_positions
 #     @user_guess.zip(@secret_code).each do |x|

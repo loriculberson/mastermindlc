@@ -13,6 +13,36 @@ class CLI
     @game       = Game.new(instream, outstream, display)
   end
 
+  def game_start
+    outstream.puts display.welcome_message
+   
+   until quit?
+    outstream.puts display.game_options
+    @command = instream.gets.chomp.upcase 
+    process_initial_commands
+   end
+    # outstream.puts display.quit
+   end
+
+  #READY TO PLACE IN CLI
+  def process_initial_commands
+    #in the game class
+    case 
+    when play?
+      game = Game.new(instream, outstream, display)
+      game.start
+    
+    when instructions?
+       display.game_objective # give the user instructions
+
+    when quit? # run the loop below until the user says to quit
+      outstream.puts display.quit
+
+    else # for anything else
+      outstream.puts display.invalid_option
+    end
+  end
+
   def play?
     command == "P" || command == "PLAY"
   end
@@ -24,42 +54,6 @@ class CLI
   def quit?
     command == "Q" || command == "QUIT"
   end
-
-  def game_start
-    display.welcome_message
-    display.game_options
-    get_user_input
-    game_flow
-  end
-
-  def get_user_input
-    @command = instream.gets.chomp.upcase
-  end
-
-  def game_flow
-    until quit? # run the loop below until the user says to quit
-      if instructions? # check if the user wants instructions
-        display.game_objective # give the user instructions
-        display.want_to_play
-        # add prompt user for new input***!!!
-        @command = instream.gets.chomp.upcase # get a new input from the user
-      
-      elsif play? # check if the user wants to play -- if play?
-        display.let_game_begin
-        # add start the game (# start the timer -- @timer.start)
-        @game.start
-        puts "What do you want to do now?"
-        @command = instream.gets.chomp.upcase
-      else # for anything else
-        display.invalid_option
-        display.prompt_for_answer
-        @command = instream.gets.chomp.upcase
-      end
-    end
-  display.quit
-  end
-  
-
 end
 
 CLI.new($stdin, $stdout).game_start
