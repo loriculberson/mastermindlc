@@ -1,6 +1,9 @@
 require_relative 'display'
 require_relative 'code_creator'
 require_relative 'guess_evaluator'
+require_relative 'game_timer'
+
+require 'colorize'
 
 class Game
   attr_reader :user_guess, 
@@ -10,7 +13,10 @@ class Game
               :command, 
               :instream, 
               :outstream,
-              :guess_evaluator
+              :guess_evaluator,
+              :timer
+
+            
 
   def initialize(instream, outstream, display)
     @secret_code = CodeCreator.new.create
@@ -20,16 +26,21 @@ class Game
     @display = display
     @user_guess_count = 1
     @guess_evaluator = GuessEvaluator.new(user_guess, secret_code)
-    
+    @timer = GameTimer.new
+  
   end
 
+
   def start
-    outstream.puts "Here is the secret code: #{secret_code}"
+    outstream.puts "Here is the secret code: #{secret_code} "
+    timer.start_the_timer
     outstream.puts display.let_game_begin
+    outstream.puts display.hard_return.blue
   
     until win? || quit?
       outstream.puts display.user_guess_count_message(user_guess_count)
       outstream.puts display.guess_request
+      outstream.puts display.prompt_for_answer
       @user_guess = instream.gets.strip.upcase
       @guess_evaluator = GuessEvaluator.new(user_guess, secret_code)
       process_game_turn
@@ -42,10 +53,14 @@ class Game
     # puts "** process_game_turn : User Guess is #{@guess_evaluator.user_guess}"
     case
     when win?
-      outstream.puts display.correct_guess
+      timer.readable_time
+      outstream.puts display.correct_guess.red
+      outstream.puts display.final_user_guess_count(@user_guess_count,timer.readable_time)
+    
 
     when quit?
-      outstream.puts display.quit
+      outstream.puts "Curious about the secret code? Shhh...it was:#{secret_code}"
+      outstream.puts display.quit.magenta
 
     when too_long?
       outstream.puts display.too_long
@@ -60,14 +75,11 @@ class Game
       colors = guess_evaluator.number_of_correct_colors
       positions = guess_evaluator.number_of_correct_positions
       outstream.puts display.color_position_message(colors, positions)
+      outstream.puts display.hard_return
     end
   end
 
   def win?
-    # puts "Here's win? in game class"
-    # puts "User guess is #{@user_guess.inspect}"
-    # puts "Secret code is #{secret_code.inspect}"
-    # puts "win #{user_guess == secret_code}"
     user_guess.chars == secret_code
   end
 

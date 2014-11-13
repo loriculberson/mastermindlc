@@ -33,6 +33,4 @@ class UserInputTest < Minitest::Test
   end
 
 
-
-
 end

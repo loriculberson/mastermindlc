@@ -1,5 +1,7 @@
 require_relative 'display'
 require_relative 'game'
+require 'colorize'
+# require_relative 'class_timer'
 
 class CLI
   attr_reader :instream, :outstream, :command, :display
@@ -9,7 +11,6 @@ class CLI
     @outstream  = outstream
     @command    =""
     @display    = Display.new
-    # @timer = Timer.new
     @game       = Game.new(instream, outstream, display)
   end
 
@@ -33,10 +34,11 @@ class CLI
       game.start
     
     when instructions?
-       display.game_objective # give the user instructions
+       display.game_objective1 # give the user instructions
+       display.game_objective2
 
     when quit? # run the loop below until the user says to quit
-      outstream.puts display.quit
+      outstream.puts display.quit.magenta
 
     else # for anything else
       outstream.puts display.invalid_option
