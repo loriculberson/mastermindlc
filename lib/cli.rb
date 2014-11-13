@@ -1,7 +1,6 @@
 require_relative 'display'
 require_relative 'game'
 require 'colorize'
-# require_relative 'class_timer'
 
 class CLI
   attr_reader :instream, :outstream, :command, :display
@@ -58,4 +57,3 @@ class CLI
   end
 end
 
-CLI.new($stdin, $stdout).game_start

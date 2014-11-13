@@ -6,17 +6,16 @@ require_relative 'game_timer'
 require 'colorize'
 
 class Game
-  attr_reader :user_guess, 
-              :user_guess_count, 
-              :secret_code, 
+  attr_reader :user_guess_count, 
               :display,
               :command, 
               :instream, 
               :outstream,
               :guess_evaluator,
-              :timer
+              :timer 
 
-            
+  attr_accessor :user_guess, 
+                :secret_code
 
   def initialize(instream, outstream, display)
     @secret_code = CodeCreator.new.create
@@ -40,7 +39,7 @@ class Game
     until win? || quit?
       outstream.puts display.user_guess_count_message(user_guess_count)
       outstream.puts display.guess_request
-      outstream.puts display.prompt_for_answer
+      # outstream.puts display.prompt_for_answer
       @user_guess = instream.gets.strip.upcase
       @guess_evaluator = GuessEvaluator.new(user_guess, secret_code)
       process_game_turn
@@ -75,7 +74,7 @@ class Game
       colors = guess_evaluator.number_of_correct_colors
       positions = guess_evaluator.number_of_correct_positions
       outstream.puts display.color_position_message(colors, positions)
-      outstream.puts display.hard_return
+      outstream.puts display.hard_return.blue
     end
   end
 
