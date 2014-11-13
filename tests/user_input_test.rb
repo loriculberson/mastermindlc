@@ -1,8 +1,6 @@
-gem 'minitest', '~>5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
 require_relative '../lib/user_input'
 require_relative '../lib/code_creator'
+require_relative 'test_helper'
 
 class UserInputTest < Minitest::Test
 
@@ -31,8 +29,6 @@ class UserInputTest < Minitest::Test
 
     assert user_input.too_short?
   end
-
-
 
 
 end
